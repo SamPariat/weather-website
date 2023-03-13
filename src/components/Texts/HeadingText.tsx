@@ -19,8 +19,10 @@ const headingVariants: Variants = {
 const HeadingText = ({ heading }: HeadingTextProps) => {
   return (
     <motion.h1
-      className="font-spacegrotesk font-extrabold text-4xl sm:text-6xl text-textColor mt-8 mb-8"
+      className="font-spacegrotesk text-center font-extrabold text-4xl sm:text-6xl text-textColor mt-8 mb-8"
       variants={headingVariants}
+      initial="hidden"
+      animate="visible"
     >
       {heading}
     </motion.h1>
