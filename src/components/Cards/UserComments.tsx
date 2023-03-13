@@ -11,16 +11,16 @@ type UserCommentsProps = {
 const UserComments = ({ comment, company, job, name }: UserCommentsProps) => {
   return (
     <motion.div
-      className="flex flex-col justify-center font-spacegrotesk bg-secondaryColor text-textColor text-center rounded-lg my-2 mx-6 py-6 px-10"
+      className="flex flex-col justify-center items-center font-spacegrotesk bg-slate-800 text-center rounded-lg my-2 mx-6 py-6 px-10 shadow-lg"
       whileHover={{
-        scale: 1.05,
+        scale: 1.025,
       }}
     >
-      <blockquote className="text-lg mb-2 font-medium">
+      <blockquote className="text-sm md:text-lg mb-2 font-medium text-white">
         <p>{`"${comment}"`}</p>
       </blockquote>
-      <h5 className="text-base font-medium">{name}</h5>
-      <p className="text-base font-normal">{`${job}, ${company}`}</p>
+      <h5 className="text-lg text-cyan-400">{name}</h5>
+      <p className="text-base font-medium text-blue-600">{`${job}, ${company}`}</p>
     </motion.div>
   );
 };

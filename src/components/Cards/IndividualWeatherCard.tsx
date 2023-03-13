@@ -35,7 +35,7 @@ const IndividualWeatherCard = ({
 }: IndividualWeatherCardProps) => {
   return (
     <motion.div
-      className="flex flex-col w-full bg-secondaryColor font-spacegrotesk px-6 py-4 rounded-lg text-textColor"
+      className="flex flex-col w-full bg-secondaryColor font-spacegrotesk px-6 py-4 rounded-lg text-textColor shadow-lg"
       variants={cardVariants}
       initial="hidden"
       animate="visible"

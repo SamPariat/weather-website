@@ -4,7 +4,7 @@ import UserComments from "../Cards/UserComments";
 
 const Comments = () => {
   return (
-    <div className="grid grid-cols-2 gap-5 justify-center">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 justify-center">
       <UserComments
         name="Sarah"
         comment="I love how easy it is to get the current weather information for my location on this website. The temperature and precipitation data are always spot on! As a freelance graphic designer, this website helps me plan my outdoor photo shoots."
