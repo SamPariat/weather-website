@@ -39,3 +39,12 @@ export interface FiveDayForecast {
   headline: string;
   forecasts: FiveDayForecastObject[];
 }
+
+export interface FiftyCitiesObject {
+  key: string;
+  city: string;
+  country: string;
+  temperature: number;
+  weatherText: string;
+  isDayTime: boolean;
+}

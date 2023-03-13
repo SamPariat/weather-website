@@ -1,5 +1,8 @@
 import React from "react";
 import moment from "moment";
+import { motion } from "framer-motion";
+
+import { containerVariants, childContainerVariants } from "./variants";
 
 type CurrentCardProps = {
   weatherText: string;
@@ -15,20 +18,34 @@ type CurrentCardProps = {
 
 const CurrentCard = (props: CurrentCardProps) => {
   return (
-    <div className="flex flex-col w-3/4 lg:w-1/2 bg-secondaryColor my-10 px-10 py-5 rounded-lg font-spacegrotesk">
-      <div className="flex justify-between py-2 mb-3 border-b-2 border-textColor">
+    <motion.div
+      className="flex flex-col w-3/4 lg:w-1/2 bg-secondaryColor my-10 px-10 py-5 rounded-lg font-spacegrotesk"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <motion.div
+        className="flex justify-between py-2 mb-3 border-b-2 border-textColor"
+        variants={childContainerVariants}
+      >
         <h5 className="text-textColor">Current Weather</h5>
         <h5 className="text-textColor">{moment().format("DD-MMM")}</h5>
-      </div>
-      <div className="text-textColor flex flex-col lg:flex-row items-center justify-between my-4">
+      </motion.div>
+      <motion.div
+        className="text-textColor flex flex-col lg:flex-row items-center justify-between my-4"
+        variants={childContainerVariants}
+      >
         <span className="flex flex-row items-baseline">
           <h1 className="font-bold text-5xl sm:text-6xl">{`${props.temperature}°C`}</h1>
         </span>
         <span className="flex flex-row items-baseline">
           <h3 className="font-semibold text-xl sm:text-2xl">{`Real Feel ${props.realFeelTemperature}°C`}</h3>
         </span>
-      </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-10">
+      </motion.div>
+      <motion.div
+        className="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-10"
+        variants={childContainerVariants}
+      >
         <div className="flex flex-col">
           <span className="text-textColor flex justify-between">
             <p className="text-sm sm:text-lg font-light">Wind</p>
@@ -69,8 +86,8 @@ const CurrentCard = (props: CurrentCardProps) => {
             </p>
           </span>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

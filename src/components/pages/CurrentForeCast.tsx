@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 
 import { getCurrentForecast } from "../../api";
 import type { CurrentForecast } from "../../api/types";
@@ -22,34 +23,16 @@ const CurrentForeCast = () => {
     pressure: undefined,
   });
   const [error, setError] = useState<string | null>(null);
+  const [render, setRender] = useState(0);
 
   const clickHandler = async () => {
     setError(null);
 
     try {
-      const {
-        currentlyRaining,
-        dewPoint,
-        humidity,
-        realFeelTemperature,
-        temperature,
-        visibility,
-        weatherText,
-        wind,
-        pressure,
-      } = await getCurrentForecast(city);
+      const _currentForecast = await getCurrentForecast(city);
 
-      setCurrentForecast({
-        currentlyRaining,
-        dewPoint,
-        humidity,
-        realFeelTemperature,
-        temperature,
-        visibility,
-        weatherText,
-        wind,
-        pressure,
-      });
+      setCurrentForecast(_currentForecast);
+      setRender(render + 2);
     } catch (error: any) {
       setError(error.message);
     }
@@ -61,17 +44,19 @@ const CurrentForeCast = () => {
       <Input setCity={setCity} />
       <Button buttonTitle="Get Current Forecast" onClick={clickHandler} />
       {currentForecast.weatherText.length > 0 && (
-        <CurrentCard
-          currentlyRaining={currentForecast.currentlyRaining}
-          dewPoint={currentForecast.dewPoint}
-          humidity={currentForecast.humidity}
-          visibility={currentForecast.visibility}
-          weatherText={currentForecast.weatherText}
-          wind={currentForecast.wind}
-          realFeelTemperature={currentForecast.realFeelTemperature}
-          temperature={currentForecast.temperature}
-          pressure={currentForecast.pressure}
-        />
+        <AnimatePresence key={`current-${render}`}>
+          <CurrentCard
+            currentlyRaining={currentForecast.currentlyRaining}
+            dewPoint={currentForecast.dewPoint}
+            humidity={currentForecast.humidity}
+            visibility={currentForecast.visibility}
+            weatherText={currentForecast.weatherText}
+            wind={currentForecast.wind}
+            realFeelTemperature={currentForecast.realFeelTemperature}
+            temperature={currentForecast.temperature}
+            pressure={currentForecast.pressure}
+          />
+        </AnimatePresence>
       )}
       {error && <ErrorText />}
     </div>

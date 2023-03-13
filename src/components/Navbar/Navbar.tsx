@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { WiCloudUp } from "react-icons/wi";
 import { CiMenuBurger } from "react-icons/ci";
+import { AnimatePresence } from "framer-motion";
 
 import NavButton from "../Buttons/NavButton";
 import InternalLinks from "./InternalLinks";
@@ -18,7 +19,9 @@ const Navbar = () => {
         onClick={() => setOpenMenu(!openMenu)}
       />
       <NavButton text="About" />
-      {openMenu && <DropDown />}
+      <AnimatePresence>
+        <DropDown open={openMenu} />
+      </AnimatePresence>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import {
   FiveDayForecast,
   FiveDayForecastObject,
   OneDayForecast,
+  FiftyCitiesObject,
 } from "./types";
 
 const accuweatherApiKey = process.env.REACT_APP_ACCUWEATHER_API_KEY;
@@ -13,7 +14,7 @@ const axiosConfig = axios.create({
   baseURL: accuweatherBaseUrl,
 });
 
-export const getLocationKey = async (cityQuery: string): Promise<number> => {
+const getLocationKey = async (cityQuery: string): Promise<number> => {
   try {
     const response = await axiosConfig.get(
       `/locations/v1/cities/autocomplete?apikey=${accuweatherApiKey}&q=${encodeURI(
@@ -131,6 +132,35 @@ export const getCurrentForecast = async (
       humidity: data["RelativeHumidity"],
       pressure: data["Pressure"]["Metric"]["Value"],
     };
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
+
+export const getTop50CitiesForecast = async (): Promise<
+  FiftyCitiesObject[]
+> => {
+  try {
+    const response = await axiosConfig.get(
+      `/currentconditions/v1/topcities/50?apikey=${accuweatherApiKey}`
+    );
+
+    const _fiftyCities: FiftyCitiesObject[] = [];
+
+    response.data.forEach((cityResponse: any) => {
+      _fiftyCities.push({
+        key: cityResponse["Key"],
+        city: cityResponse["EnglishName"],
+        country: cityResponse["Country"]["EnglishName"],
+        temperature: cityResponse["Temperature"]["Metric"]["Value"],
+        weatherText: cityResponse["WeatherText"],
+        isDayTime: cityResponse["IsDayTime"],
+      });
+    });
+
+    _fiftyCities.sort((a, b) => a.city.localeCompare(b.city));
+
+    return _fiftyCities;
   } catch (error: any) {
     throw new Error(error.message);
   }

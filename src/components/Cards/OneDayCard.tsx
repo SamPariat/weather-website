@@ -1,6 +1,9 @@
 import React from "react";
 import moment from "moment";
+import { motion } from "framer-motion";
 import { BsSun, BsMoon } from "react-icons/bs";
+
+import { childContainerVariants, containerVariants } from "./variants";
 
 type OneDayCardProps = {
   time: "day" | "night";
@@ -18,12 +21,24 @@ const OneDayCard = (props: OneDayCardProps) => {
   const isDay = props.time === "day";
 
   return (
-    <div className="flex flex-col w-3/4 lg:w-1/2 bg-secondaryColor my-10 px-10 py-5 rounded-lg font-spacegrotesk">
-      <div className="flex justify-between py-2 mb-3 border-b-2 border-textColor">
+    <motion.div
+      className="flex flex-col w-3/4 lg:w-1/2 bg-secondaryColor my-10 px-10 py-5 rounded-lg font-spacegrotesk"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+    >
+      <motion.div
+        className="flex justify-between py-2 mb-3 border-b-2 border-textColor"
+        variants={childContainerVariants}
+      >
         <h5 className="text-textColor uppercase">{props.time}</h5>
         <h5 className="text-textColor">{moment().format("DD-MMM")}</h5>
-      </div>
-      <div className="text-textColor flex flex-col lg:flex-row items-center justify-between my-4">
+      </motion.div>
+      <motion.div
+        className="text-textColor flex flex-col lg:flex-row items-center justify-between my-4"
+        variants={childContainerVariants}
+      >
         <span className="flex flex-row items-baseline">
           <h1 className="font-bold text-6xl">{`${props.temperature}°`}</h1>
           <h3 className="font-light text-lg">{isDay ? "Hi" : "Lo"}</h3>
@@ -31,11 +46,17 @@ const OneDayCard = (props: OneDayCardProps) => {
         <span className="mt-6 lg:mt-0 text-6xl">
           {isDay ? <BsSun /> : <BsMoon />}
         </span>
-      </div>
-      <h5 className="text-textColor font-semibold text-lg sm:text-xl mb-3">
+      </motion.div>
+      <motion.h5
+        className="text-textColor font-semibold text-lg sm:text-xl mb-3"
+        variants={childContainerVariants}
+      >
         {props.aboutWeather}
-      </h5>
-      <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-10">
+      </motion.h5>
+      <motion.div
+        className="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-10"
+        variants={childContainerVariants}
+      >
         <div className="flex flex-col">
           <span className="text-textColor flex justify-between">
             <p className="text-sm sm:text-lg font-light">Wind Gust</p>
@@ -84,8 +105,8 @@ const OneDayCard = (props: OneDayCardProps) => {
             </span>
           )}
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

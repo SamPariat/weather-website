@@ -1,11 +1,17 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const InternalLinks = () => {
   return (
     <div className="hidden sm:flex flex-row flex-auto justify-center">
       <ul className="flex flex-row space-x-10">
-        <li className="transition ease-in-out text-md text-textColor border-transparent border-b-2 duration-300 hover:border-b-secondaryColor">
+        <motion.li
+          className="transition ease-in-out text-md text-textColor border-transparent border-b-2 duration-300 hover:border-b-secondaryColor"
+          whileHover={{
+            scale: 1.05,
+          }}
+        >
           <NavLink
             to="/oneDayForecast"
             className={({ isActive }) =>
@@ -14,8 +20,13 @@ const InternalLinks = () => {
           >
             1 Day Weather
           </NavLink>
-        </li>
-        <li className="transition ease-in-out text-md text-textColor border-transparent border-b-2 duration-300 hover:border-b-secondaryColor">
+        </motion.li>
+        <motion.li
+          className="transition ease-in-out text-md text-textColor border-transparent border-b-2 duration-300 hover:border-b-secondaryColor"
+          whileHover={{
+            scale: 1.05,
+          }}
+        >
           <NavLink
             to="/fiveDayForecast"
             className={({ isActive }) =>
@@ -24,8 +35,13 @@ const InternalLinks = () => {
           >
             5 Day Weather
           </NavLink>
-        </li>
-        <li className="transition ease-in-out text-md text-textColor border-transparent border-b-2 duration-300 hover:border-b-secondaryColor">
+        </motion.li>
+        <motion.li
+          className="transition ease-in-out text-md text-textColor border-transparent border-b-2 duration-300 hover:border-b-secondaryColor"
+          whileHover={{
+            scale: 1.05,
+          }}
+        >
           <NavLink
             to="/currentForecast"
             className={({ isActive }) =>
@@ -34,7 +50,7 @@ const InternalLinks = () => {
           >
             Current Forecast
           </NavLink>
-        </li>
+        </motion.li>
       </ul>
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import moment from "moment";
+import { AnimatePresence } from "framer-motion";
 
 import { get5DayForecast } from "../../api";
 import type { FiveDayForecast } from "../../api/types";
@@ -18,6 +19,7 @@ const FiveDayForeCast = () => {
   });
   const [error, setError] = useState<string | null>("");
   const [city, setCity] = useState("");
+  const [render, setRender] = useState(0);
 
   const clickHandler = async () => {
     setError(null);
@@ -26,6 +28,7 @@ const FiveDayForeCast = () => {
       const { forecasts, headline } = await get5DayForecast(city);
 
       setFiveDayForecast({ forecasts, headline });
+      setRender(render + 6);
     } catch (error: any) {
       setError(error.message);
     }
@@ -44,19 +47,21 @@ const FiveDayForeCast = () => {
       )}
       {fiveDayForecast.forecasts.length > 0 &&
         fiveDayForecast.forecasts.map((forecast, dayFromToday) => (
-          <FiveDayCard
-            key={dayFromToday}
-            maximumTemperature={forecast.maximumTemperature}
-            minimumTemperature={forecast.minimumTemperature}
-            precipitationProbabilityDay={forecast.precipitationProbabilityDay}
-            precipitationProbabilityNight={
-              forecast.precipitationProbabilityNight
-            }
-            airQuality={forecast.airQuality}
-            uvIndex={forecast.uvIndex}
-            date={moment().add(dayFromToday, "day").format("DD-MMM-YY")}
-            dayOfWeek={moment().add(dayFromToday, "days").format("ddd")}
-          />
+          <AnimatePresence key={`fiveDays-${render}`}>
+            <FiveDayCard
+              key={dayFromToday}
+              maximumTemperature={forecast.maximumTemperature}
+              minimumTemperature={forecast.minimumTemperature}
+              precipitationProbabilityDay={forecast.precipitationProbabilityDay}
+              precipitationProbabilityNight={
+                forecast.precipitationProbabilityNight
+              }
+              airQuality={forecast.airQuality}
+              uvIndex={forecast.uvIndex}
+              date={moment().add(dayFromToday, "day").format("DD-MMM-YY")}
+              dayOfWeek={moment().add(dayFromToday, "days").format("ddd")}
+            />
+          </AnimatePresence>
         ))}
       {error && <ErrorText />}
     </div>
