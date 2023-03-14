@@ -44,64 +44,66 @@ const listItemVariants: Variants = {
 const DropDown = ({ open }: DropDownProps) => {
   return (
     <motion.div
-      className="flex flex-col justify-center items-center sm:hidden font-spacegrotesk absolute top-16 right-2 bg-primaryColor w-40 h-56 rounded-lg py-6"
+      className="flex flex-col justify-center items-center sm:hidden font-spacegrotesk absolute top-16 right-2 bg-primaryColor w-40 h-56 rounded-lg py-6 z-10"
       variants={dropDownVariants}
       animate={open ? "open" : "closed"}
     >
-      <motion.ul className="list-none space-y-2" variants={listVariants}>
-        <motion.li
-          className="text-md border-l-4 border-transparent duration-300 text-textColor pl-2"
-          variants={listItemVariants}
-        >
-          <NavLink
-            to="/oneDayForecast"
-            className={({ isActive }) =>
-              isActive ? "border-l-4 border-l-secondaryColor pl-2" : undefined
-            }
+      {open && (
+        <motion.ul className="list-none space-y-2" variants={listVariants}>
+          <motion.li
+            className="text-md border-l-4 border-transparent duration-300 text-textColor pl-2"
+            variants={listItemVariants}
           >
-            1 Day Forecast
-          </NavLink>
-        </motion.li>
-        <motion.li
-          className="text-md border-l-4 border-transparent duration-300 text-textColor pl-2"
-          variants={listItemVariants}
-        >
-          <NavLink
-            to="/fiveDayForecast"
-            className={({ isActive }) =>
-              isActive ? "border-l-4 border-l-secondaryColor pl-2" : undefined
-            }
+            <NavLink
+              to="/oneDayForecast"
+              className={({ isActive }) =>
+                isActive ? "border-l-4 border-l-secondaryColor pl-2" : undefined
+              }
+            >
+              1 Day Forecast
+            </NavLink>
+          </motion.li>
+          <motion.li
+            className="text-md border-l-4 border-transparent duration-300 text-textColor pl-2"
+            variants={listItemVariants}
           >
-            5 Day Forecast
-          </NavLink>
-        </motion.li>
-        <motion.li
-          className="text-md border-l-4 border-transparent duration-300 text-textColor pl-2"
-          variants={listItemVariants}
-        >
-          <NavLink
-            to="/currentForecast"
-            className={({ isActive }) =>
-              isActive ? "border-l-4 border-l-secondaryColor pl-2" : undefined
-            }
+            <NavLink
+              to="/fiveDayForecast"
+              className={({ isActive }) =>
+                isActive ? "border-l-4 border-l-secondaryColor pl-2" : undefined
+              }
+            >
+              5 Day Forecast
+            </NavLink>
+          </motion.li>
+          <motion.li
+            className="text-md border-l-4 border-transparent duration-300 text-textColor pl-2"
+            variants={listItemVariants}
           >
-            Current Forecast
-          </NavLink>
-        </motion.li>
-        <motion.li
-          className="text-md border-l-4 border-transparent duration-300 text-textColor pl-2"
-          variants={listItemVariants}
-        >
-          <NavLink
-            to="/about"
-            className={({ isActive }) =>
-              isActive ? "border-l-4 border-l-secondaryColor pl-2" : undefined
-            }
+            <NavLink
+              to="/currentForecast"
+              className={({ isActive }) =>
+                isActive ? "border-l-4 border-l-secondaryColor pl-2" : undefined
+              }
+            >
+              Current Forecast
+            </NavLink>
+          </motion.li>
+          <motion.li
+            className="text-md border-l-4 border-transparent duration-300 text-textColor pl-2"
+            variants={listItemVariants}
           >
-            About
-          </NavLink>
-        </motion.li>
-      </motion.ul>
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
+                isActive ? "border-l-4 border-l-secondaryColor pl-2" : undefined
+              }
+            >
+              About
+            </NavLink>
+          </motion.li>
+        </motion.ul>
+      )}
     </motion.div>
   );
 };
