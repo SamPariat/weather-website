@@ -19,7 +19,6 @@ const FiveDayForeCast = () => {
   });
   const [error, setError] = useState<string | null>("");
   const [city, setCity] = useState("");
-  const [render, setRender] = useState(0);
 
   const clickHandler = async () => {
     setError(null);
@@ -28,7 +27,6 @@ const FiveDayForeCast = () => {
       const { forecasts, headline } = await get5DayForecast(city);
 
       setFiveDayForecast({ forecasts, headline });
-      setRender(render + 6);
     } catch (error: any) {
       setError(error.message);
     }
@@ -47,7 +45,7 @@ const FiveDayForeCast = () => {
       )}
       {fiveDayForecast.forecasts.length > 0 &&
         fiveDayForecast.forecasts.map((forecast, dayFromToday) => (
-          <AnimatePresence key={`fiveDays-${render}`}>
+          <AnimatePresence key={`fiveDays-${dayFromToday}`}>
             <FiveDayCard
               key={dayFromToday}
               maximumTemperature={forecast.maximumTemperature}

@@ -23,7 +23,7 @@ const Navbar = () => {
         className="flex sm:hidden text-secondaryColor font-bold text-2xl cursor-pointer"
         onClick={() => setOpenMenu(!openMenu)}
       />
-      <NavButton text="About" />
+      <NavButton text="About" navigateTo="/about" />
       <AnimatePresence>
         <DropDown open={openMenu} />
       </AnimatePresence>

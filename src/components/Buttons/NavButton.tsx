@@ -1,11 +1,14 @@
 import React, { Fragment } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 type NavButtonProps = {
   text: string;
+  navigateTo: string;
 };
 
-const NavButton = ({ text }: NavButtonProps) => {
+const NavButton = ({ text, navigateTo }: NavButtonProps) => {
+  const navigate = useNavigate();
   return (
     <Fragment>
       <motion.button
@@ -13,6 +16,7 @@ const NavButton = ({ text }: NavButtonProps) => {
         whileHover={{
           scale: 1.05,
         }}
+        onClick={() => navigate(navigateTo)}
       >
         {text}
       </motion.button>

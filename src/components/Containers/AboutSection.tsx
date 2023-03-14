@@ -7,14 +7,13 @@ import SiteDescription from "../Cards/SiteDescription";
 const containerVariants: Variants = {
   hidden: {
     opacity: 0,
-    y: 200,
+    y: 50,
   },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
       staggerChildren: 1.2,
-      duration: 3,
     },
   },
 };
