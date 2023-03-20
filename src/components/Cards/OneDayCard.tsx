@@ -4,9 +4,13 @@ import { motion } from "framer-motion";
 import { BsSun, BsMoon } from "react-icons/bs";
 
 import { childContainerVariants, containerVariants } from "./variants";
+import { getMoonPhaseIcon } from "../../api/iconMap";
 
-type OneDayCardProps = {
-  time: "day" | "night";
+type MoonPhaseProps =
+  | { time: "day"; moonPhase: null }
+  | { time: "night"; moonPhase: string };
+
+type OtherProps = {
   aboutWeather?: string;
   temperature?: number;
   realFeelTemperature?: number;
@@ -17,8 +21,11 @@ type OneDayCardProps = {
   hoursOfSun?: number | null;
 };
 
+type OneDayCardProps = MoonPhaseProps & OtherProps;
+
 const OneDayCard = (props: OneDayCardProps) => {
   const isDay = props.time === "day";
+  const MoonIcon = getMoonPhaseIcon(props.moonPhase);
 
   return (
     <motion.div
@@ -44,7 +51,7 @@ const OneDayCard = (props: OneDayCardProps) => {
           <h3 className="font-light text-lg">{isDay ? "Hi" : "Lo"}</h3>
         </span>
         <span className="mt-6 lg:mt-0 text-6xl">
-          {isDay ? <BsSun /> : <BsMoon />}
+          {isDay ? <BsSun /> : MoonIcon ?? <BsMoon />}
         </span>
       </motion.div>
       <motion.h5

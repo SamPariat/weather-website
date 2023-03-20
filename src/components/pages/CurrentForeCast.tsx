@@ -11,19 +11,10 @@ import CurrentCard from "../Cards/CurrentCard";
 
 const CurrentForeCast = () => {
   const [city, setCity] = useState("");
-  const [currentForecast, setCurrentForecast] = useState<CurrentForecast>({
-    weatherText: "",
-    temperature: undefined,
-    realFeelTemperature: undefined,
-    wind: "",
-    dewPoint: undefined,
-    visibility: "",
-    currentlyRaining: false,
-    humidity: undefined,
-    pressure: undefined,
-  });
+  const [currentForecast, setCurrentForecast] = useState<
+    CurrentForecast[] | null
+  >(null);
   const [error, setError] = useState<string | null>(null);
-  const [render, setRender] = useState(0);
 
   const clickHandler = async () => {
     setError(null);
@@ -32,7 +23,6 @@ const CurrentForeCast = () => {
       const _currentForecast = await getCurrentForecast(city);
 
       setCurrentForecast(_currentForecast);
-      setRender(render + 2);
     } catch (error: any) {
       setError(error.message);
     }
@@ -42,22 +32,30 @@ const CurrentForeCast = () => {
     <div className="flex flex-col items-center">
       <HeadingText heading="Current Forecast" />
       <Input setCity={setCity} />
-      <Button buttonTitle="Get Current Forecast" onClick={clickHandler} />
-      {currentForecast.weatherText.length > 0 && (
-        <AnimatePresence key={`current-${render}`}>
-          <CurrentCard
-            currentlyRaining={currentForecast.currentlyRaining}
-            dewPoint={currentForecast.dewPoint}
-            humidity={currentForecast.humidity}
-            visibility={currentForecast.visibility}
-            weatherText={currentForecast.weatherText}
-            wind={currentForecast.wind}
-            realFeelTemperature={currentForecast.realFeelTemperature}
-            temperature={currentForecast.temperature}
-            pressure={currentForecast.pressure}
-          />
-        </AnimatePresence>
-      )}
+      <Button
+        buttonTitle="Get Current Forecast"
+        onClick={clickHandler}
+        disableButton={city.length < 3}
+      />
+      {currentForecast &&
+        currentForecast.map((hourlyForecast, hour) => (
+          <AnimatePresence key={`current-${hour}`}>
+            <CurrentCard
+              weatherIcon={hourlyForecast.weatherIcon}
+              precipitationProbability={hourlyForecast.precipitationProbability}
+              dewPoint={hourlyForecast.dewPoint}
+              humidity={hourlyForecast.humidity}
+              visibility={hourlyForecast.visibility}
+              weatherText={hourlyForecast.weatherText}
+              wind={hourlyForecast.wind}
+              realFeelTemperature={hourlyForecast.realFeelTemperature}
+              temperature={hourlyForecast.temperature}
+              iconPhrase={hourlyForecast.iconPhrase}
+              hour={hour}
+              dateTime={hourlyForecast.dateTime}
+            />
+          </AnimatePresence>
+        ))}
       {error && <ErrorText />}
     </div>
   );

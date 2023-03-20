@@ -36,7 +36,11 @@ const FiveDayForeCast = () => {
     <div className="flex flex-col items-center">
       <HeadingText heading="Five Day Forecast" />
       <Input setCity={setCity} />
-      <Button buttonTitle="Get Five Day Forecast" onClick={clickHandler} />
+      <Button
+        buttonTitle="Get Five Day Forecast"
+        onClick={clickHandler}
+        disableButton={city.length < 3}
+      />
       {fiveDayForecast.headline.length > 0 && (
         <HeadlineText
           subHeading="Some Information"

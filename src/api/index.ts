@@ -44,6 +44,7 @@ export const get1DayForecast = async (
 
     return {
       aboutWeather: response.data["Headline"]["Text"],
+      moonPhase: dailyForecasts["Moon"]["Phase"],
       temperature: {
         day: dailyForecasts["Temperature"]["Maximum"]["Value"],
         night: dailyForecasts["Temperature"]["Minimum"]["Value"],
@@ -109,29 +110,35 @@ export const get5DayForecast = async (
 
 export const getCurrentForecast = async (
   cityQuery: string
-): Promise<CurrentForecast> => {
+): Promise<CurrentForecast[]> => {
   try {
     const locationKey: number = await getLocationKey(cityQuery);
 
     const response = await axiosConfig.get(
-      `/currentconditions/v1/${encodeURI(
+      `/forecasts/v1/hourly/12hour/${encodeURI(
         locationKey.toString()
-      )}?apikey=${accuweatherApiKey}&details=true`
+      )}?apikey=${accuweatherApiKey}&details=true&metric=true`
     );
 
-    const data = response.data[0];
+    const _12HourForecast: CurrentForecast[] = [];
+    response.data.forEach((hourlyForecast: any) => {
+      _12HourForecast.push({
+        weatherIcon: hourlyForecast["WeatherIcon"],
+        weatherText: hourlyForecast["WeatherText"],
+        temperature: hourlyForecast["Temperature"]["Value"],
+        realFeelTemperature:
+          hourlyForecast["RealFeelTemperature"]["Value"],
+        wind: `${hourlyForecast["Wind"]["Speed"]["Value"]} km/h ${hourlyForecast["Wind"]["Direction"]["English"]}`,
+        dewPoint: hourlyForecast["DewPoint"]["Value"],
+        visibility: `${hourlyForecast["Visibility"]["Value"]} km`,
+        precipitationProbability: hourlyForecast["PrecipitationProbability"],
+        humidity: hourlyForecast["RelativeHumidity"],
+        iconPhrase: hourlyForecast["IconPhrase"],
+        dateTime: hourlyForecast["DateTime"],
+      });
+    });
 
-    return {
-      weatherText: data["WeatherText"],
-      temperature: data["Temperature"]["Metric"]["Value"],
-      realFeelTemperature: data["RealFeelTemperature"]["Metric"]["Value"],
-      wind: `${data["Wind"]["Speed"]["Metric"]["Value"]} km/h ${data["Wind"]["Direction"]["English"]}`,
-      dewPoint: data["DewPoint"]["Metric"]["Value"],
-      visibility: `${data["Visibility"]["Metric"]["Value"]} km`,
-      currentlyRaining: data["HasPrecipitation"],
-      humidity: data["RelativeHumidity"],
-      pressure: data["Pressure"]["Metric"]["Value"],
-    };
+    return _12HourForecast;
   } catch (error: any) {
     throw new Error(error.message);
   }

@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { motion, Variants } from "framer-motion";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 
 type DropDownProps = {
   open: boolean;
@@ -48,62 +48,72 @@ const DropDown = ({ open }: DropDownProps) => {
       variants={dropDownVariants}
       animate={open ? "open" : "closed"}
     >
-      {open && (
-        <motion.ul className="list-none space-y-2" variants={listVariants}>
-          <motion.li
-            className="text-md border-l-4 border-transparent duration-300 text-textColor pl-2"
-            variants={listItemVariants}
-          >
-            <NavLink
-              to="/oneDayForecast"
-              className={({ isActive }) =>
-                isActive ? "border-l-4 border-l-secondaryColor pl-2" : undefined
-              }
+      <AnimatePresence>
+        {open && (
+          <motion.ul className="list-none space-y-2" variants={listVariants}>
+            <motion.li
+              className="text-md border-l-4 border-transparent duration-300 text-textColor pl-2"
+              variants={listItemVariants}
             >
-              1 Day Forecast
-            </NavLink>
-          </motion.li>
-          <motion.li
-            className="text-md border-l-4 border-transparent duration-300 text-textColor pl-2"
-            variants={listItemVariants}
-          >
-            <NavLink
-              to="/fiveDayForecast"
-              className={({ isActive }) =>
-                isActive ? "border-l-4 border-l-secondaryColor pl-2" : undefined
-              }
+              <NavLink
+                to="/oneDayForecast"
+                className={({ isActive }) =>
+                  isActive
+                    ? "border-l-4 border-l-secondaryColor pl-2"
+                    : undefined
+                }
+              >
+                1 Day Forecast
+              </NavLink>
+            </motion.li>
+            <motion.li
+              className="text-md border-l-4 border-transparent duration-300 text-textColor pl-2"
+              variants={listItemVariants}
             >
-              5 Day Forecast
-            </NavLink>
-          </motion.li>
-          <motion.li
-            className="text-md border-l-4 border-transparent duration-300 text-textColor pl-2"
-            variants={listItemVariants}
-          >
-            <NavLink
-              to="/currentForecast"
-              className={({ isActive }) =>
-                isActive ? "border-l-4 border-l-secondaryColor pl-2" : undefined
-              }
+              <NavLink
+                to="/fiveDayForecast"
+                className={({ isActive }) =>
+                  isActive
+                    ? "border-l-4 border-l-secondaryColor pl-2"
+                    : undefined
+                }
+              >
+                5 Day Forecast
+              </NavLink>
+            </motion.li>
+            <motion.li
+              className="text-md border-l-4 border-transparent duration-300 text-textColor pl-2"
+              variants={listItemVariants}
             >
-              Current Forecast
-            </NavLink>
-          </motion.li>
-          <motion.li
-            className="text-md border-l-4 border-transparent duration-300 text-textColor pl-2"
-            variants={listItemVariants}
-          >
-            <NavLink
-              to="/about"
-              className={({ isActive }) =>
-                isActive ? "border-l-4 border-l-secondaryColor pl-2" : undefined
-              }
+              <NavLink
+                to="/currentForecast"
+                className={({ isActive }) =>
+                  isActive
+                    ? "border-l-4 border-l-secondaryColor pl-2"
+                    : undefined
+                }
+              >
+                Current Forecast
+              </NavLink>
+            </motion.li>
+            <motion.li
+              className="text-md border-l-4 border-transparent duration-300 text-textColor pl-2"
+              variants={listItemVariants}
             >
-              About
-            </NavLink>
-          </motion.li>
-        </motion.ul>
-      )}
+              <NavLink
+                to="/about"
+                className={({ isActive }) =>
+                  isActive
+                    ? "border-l-4 border-l-secondaryColor pl-2"
+                    : undefined
+                }
+              >
+                About
+              </NavLink>
+            </motion.li>
+          </motion.ul>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };

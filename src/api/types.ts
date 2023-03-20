@@ -1,15 +1,3 @@
-export interface CurrentForecast {
-  weatherText: string;
-  temperature: number | undefined;
-  realFeelTemperature: number | undefined;
-  wind: string;
-  dewPoint: number | undefined;
-  visibility: string;
-  currentlyRaining: boolean;
-  humidity: number | undefined;
-  pressure: number | undefined;
-}
-
 export type DayNightObject = {
   day: number;
   night: number;
@@ -17,6 +5,7 @@ export type DayNightObject = {
 
 export interface OneDayForecast {
   aboutWeather: string;
+  moonPhase: string;
   temperature: DayNightObject | undefined;
   realFeelTemperature: DayNightObject | undefined;
   realFeelTemperatureShade: number | undefined;
@@ -47,4 +36,18 @@ export interface FiftyCitiesObject {
   temperature: number;
   weatherText: string;
   isDayTime: boolean;
+}
+
+export interface CurrentForecast {
+  weatherIcon: number | undefined;
+  weatherText: string;
+  temperature: number | undefined;
+  realFeelTemperature: number | undefined;
+  wind: string;
+  dewPoint: number | undefined;
+  visibility: string;
+  precipitationProbability: number | undefined;
+  humidity: number | undefined;
+  iconPhrase: string;
+  dateTime: string;
 }

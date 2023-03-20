@@ -13,6 +13,7 @@ import OneDayCard from "../Cards/OneDayCard";
 const OneDayForeCast = () => {
   const [oneDayForecast, setOneDayForecast] = useState<OneDayForecast>({
     aboutWeather: "",
+    moonPhase: "",
     temperature: undefined,
     realFeelTemperature: undefined,
     realFeelTemperatureShade: undefined,
@@ -42,12 +43,17 @@ const OneDayForeCast = () => {
     <div className="flex flex-col items-center">
       <HeadingText heading="One Day Forecast" />
       <Input setCity={setCity} />
-      <Button buttonTitle="Get One Day Forecast" onClick={clickHandler} />
+      <Button
+        buttonTitle="Get One Day Forecast"
+        onClick={clickHandler}
+        disableButton={city.length < 3}
+      />
       {oneDayForecast.aboutWeather.length > 0 && (
         <Fragment>
           <AnimatePresence key={`oneDay-${render}`}>
             <OneDayCard
               time="day"
+              moonPhase={null}
               aboutWeather={oneDayForecast.aboutWeather}
               hoursOfSun={oneDayForecast.hoursOfSun}
               precipitationProbability={
@@ -61,6 +67,7 @@ const OneDayForeCast = () => {
             />
             <OneDayCard
               time="night"
+              moonPhase={oneDayForecast.moonPhase}
               precipitationProbability={
                 oneDayForecast.precipitationProbability?.night
               }
