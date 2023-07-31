@@ -1,12 +1,14 @@
-import React, { useState } from "react";
-import moment from "moment";
 import { AnimatePresence } from "framer-motion";
+import moment from "moment";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+import { v4 } from "uuid";
 
 import { get5DayForecast } from "../../api";
 import type { FiveDayForecast } from "../../api/types";
 
-import FiveDayCard from "../Cards/FiveDayCard";
 import Button from "../Buttons/Button";
+import FiveDayCard from "../Cards/FiveDayCard";
 import Input from "../Inputs/Input";
 import ErrorText from "../Texts/ErrorText";
 import HeadingText from "../Texts/HeadingText";
@@ -19,14 +21,27 @@ const FiveDayForeCast = () => {
   });
   const [error, setError] = useState<string | null>("");
   const [city, setCity] = useState("");
+  const [animationKey, setAnimationKey] = useState<string>("");
 
   const clickHandler = async () => {
     setError(null);
+    setFiveDayForecast({
+      headline: "",
+      forecasts: [],
+    });
 
     try {
-      const { forecasts, headline } = await get5DayForecast(city);
+      const { forecasts, headline } = await toast.promise(
+        get5DayForecast(city),
+        {
+          pending: "Sending request...",
+          success: `Here is the 5 day forecast for ${city}`,
+          error: "Couldn't send request. Something went wrong...",
+        }
+      );
 
       setFiveDayForecast({ forecasts, headline });
+      setAnimationKey(v4());
     } catch (error: any) {
       setError(error.message);
     }
@@ -49,7 +64,7 @@ const FiveDayForeCast = () => {
       )}
       {fiveDayForecast.forecasts.length > 0 &&
         fiveDayForecast.forecasts.map((forecast, dayFromToday) => (
-          <AnimatePresence key={`fiveDays-${dayFromToday}`}>
+          <AnimatePresence key={animationKey}>
             <FiveDayCard
               key={dayFromToday}
               maximumTemperature={forecast.maximumTemperature}

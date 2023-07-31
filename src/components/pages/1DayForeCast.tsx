@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from "react";
 import { AnimatePresence } from "framer-motion";
+import { toast } from "react-toastify";
 
 import { get1DayForecast } from "../../api";
 import type { OneDayForecast } from "../../api/types";
@@ -30,7 +31,11 @@ const OneDayForeCast = () => {
     setError(null);
 
     try {
-      const _1DayForecast = await get1DayForecast(city);
+      const _1DayForecast = await toast.promise(get1DayForecast(city), {
+        pending: "Sending request...",
+        success: `Here is the 1 day forecast for ${city}`,
+        error: "Couldn't send request. Something went wrong...",
+      });
 
       setOneDayForecast(_1DayForecast);
       setRender(render + 3);

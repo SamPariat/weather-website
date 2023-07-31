@@ -1,13 +1,14 @@
-import React, { useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 import { getCurrentForecast } from "../../api";
 import type { CurrentForecast } from "../../api/types";
-import HeadingText from "../Texts/HeadingText";
-import Input from "../Inputs/Input";
-import ErrorText from "../Texts/ErrorText";
 import Button from "../Buttons/Button";
 import CurrentCard from "../Cards/CurrentCard";
+import Input from "../Inputs/Input";
+import ErrorText from "../Texts/ErrorText";
+import HeadingText from "../Texts/HeadingText";
 
 const CurrentForeCast = () => {
   const [city, setCity] = useState("");
@@ -20,7 +21,11 @@ const CurrentForeCast = () => {
     setError(null);
 
     try {
-      const _currentForecast = await getCurrentForecast(city);
+      const _currentForecast = await toast.promise(getCurrentForecast(city), {
+        pending: "Sending request...",
+        success: `Here is the current forecast for ${city}`,
+        error: "Couldn't send request. Something went wrong...",
+      });
 
       setCurrentForecast(_currentForecast);
     } catch (error: any) {

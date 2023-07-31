@@ -1,16 +1,16 @@
-export type DayNightObject = {
-  day: number;
-  night: number;
+export type DayNightObject<T> = {
+  day: T;
+  night: T;
 };
 
 export interface OneDayForecast {
   aboutWeather: string;
   moonPhase: string;
-  temperature: DayNightObject | undefined;
-  realFeelTemperature: DayNightObject | undefined;
+  temperature: DayNightObject<number> | undefined;
+  realFeelTemperature: DayNightObject<number> | undefined;
   realFeelTemperatureShade: number | undefined;
-  windGust: { day: string; night: string } | undefined;
-  precipitationProbability: DayNightObject | undefined;
+  windGust: DayNightObject<string> | undefined;
+  precipitationProbability: DayNightObject<number> | undefined;
   uvIndex: string;
   hoursOfSun: number | undefined;
 }

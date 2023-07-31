@@ -121,6 +121,7 @@ export const getCurrentForecast = async (
     );
 
     const _12HourForecast: CurrentForecast[] = [];
+    
     response.data.forEach((hourlyForecast: any) => {
       _12HourForecast.push({
         weatherIcon: hourlyForecast["WeatherIcon"],

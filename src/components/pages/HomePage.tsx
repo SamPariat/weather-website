@@ -59,7 +59,7 @@ const HomePage = () => {
       <Comments />
       <div className="flex flex-col items-center">
         <motion.h2
-          className="font-extrabold text-5xl text-textColor my-5"
+          className="font-extrabold text-5xl text-textColor my-5 mx-10"
           variants={headingVariants}
           initial="hidden"
           animate="visible"
